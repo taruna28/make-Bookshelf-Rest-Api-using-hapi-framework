@@ -1,3 +1,3 @@
-const notes = [];
- 
-module.exports = notes;
+const books = [];
+let result = books.map(({ name }) => name)
+module.exports = {books,result};

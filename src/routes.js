@@ -3,26 +3,26 @@ const { addNoteHandler, getAllNotesHandler,getNoteByIdHandler,editNoteByIdHandle
 
 const routes = [
     {
-      
+
       method: 'POST',
       path: '/books',
       handler: addNoteHandler,
     },
-    // {
-    //     method: 'GET',
-    //     path: '/notes',
-    //     handler: getAllNotesHandler,
-    //  },
-    //  {
-    //     method: 'GET',
-    //     path: '/notes/{id}',
-    //     handler: getNoteByIdHandler,
-    //   },
-    //   {
-    //     method: 'PUT',
-    //     path: '/notes/{id}',
-    //     handler: editNoteByIdHandler,
-    //   },
+    {
+        method: 'GET',
+        path: '/books',
+        handler: getAllNotesHandler,
+     },
+     {
+        method: 'GET',
+        path: '/books/{id}',
+        handler: getNoteByIdHandler,
+      },
+      // {
+      //   method: 'PUT',
+      //   path: '/books/{id}',
+      //   handler: editNoteByIdHandler,
+      // },
     //   {
     //     method: 'DELETE',
     //     path: '/notes/{id}',
