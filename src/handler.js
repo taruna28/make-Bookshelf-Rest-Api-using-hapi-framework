@@ -23,14 +23,6 @@ const addNoteHandler = (request, h) => {
       finished = false;
     }
   
-    
-   
-    const newNote = {
-      name, year, author, summary,publisher,pageCount, readPage,finished,reading,insertedAt,updatedAt, id
-    };
-    // console.log(newNote);
-   
-    books.push(newNote);
    
     // const isSuccess = notes.filter((note) => note.id === id).length > 0;
     isSuccess = name !== undefined
@@ -39,7 +31,12 @@ const addNoteHandler = (request, h) => {
     // console.log(isSuccess)
     // console.log(notes.filter((note) => note.id === id))
    
-    if (isSuccess&&!(readPage>pageCount)) {
+    if (isSuccess&&!(readPage>pageCount)&&publisher) {
+      const newNote = {
+        name, year, author, summary,publisher,pageCount, readPage,finished,reading,insertedAt,updatedAt, id
+      };
+      // console.log(newNote);
+      books.push(newNote);
       const response = h.response({
         status: 'success',
         message: 'Buku berhasil ditambahkan',
