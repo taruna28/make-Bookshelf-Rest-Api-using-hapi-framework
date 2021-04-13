@@ -66,6 +66,7 @@ const addNoteHandler = (request, h) => {
       };
 
   const getAllNotesHandler = () => ({
+    //memang tidak ada di test tapi di run dari awal sehingga mengembalikan 1 array supaya tidak error
     status: 'success',
     data: {
       books: books.map((book) => ({
@@ -80,9 +81,9 @@ const addNoteHandler = (request, h) => {
    
   const getNoteByIdHandler = (request, h) => {
     const { id } = request.params;
-   
+  //  console.log
     const book = books.filter((n) => n.id === id)[0];
-    // console.log(book)
+    // console.log(books.filter((n) => n.id === id))
    if (book !== undefined) {
       return {
         status: 'success',
@@ -109,7 +110,7 @@ const addNoteHandler = (request, h) => {
     const index = books.findIndex((note) => note.id === id);
     
    
-    if (index !== -1) {
+    if (index !== -1&&name !== undefined&&readPage<pageCount) {
       books[index] = {
         ...books[index],
         name,
@@ -120,51 +121,67 @@ const addNoteHandler = (request, h) => {
         pageCount,
         readPage,reading
       };
-      console.log(books[index])
+      // console.log(books[index])
       const response = h.response({
         status: 'success',
-        message: 'Catatan berhasil diperbarui',
+        message: 'Buku berhasil diperbarui',
       });
       response.code(200);
       return response;
+    }else if(readPage>pageCount){
+      const response = h.response({
+        status: 'fail',
+        message: 'Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount',
+      });
+      response.code(400);
+      return response;
+    }else if(name==undefined){
+      const response = h.response({
+        status: 'fail',
+        message: 'Gagal memperbarui buku. Mohon isi nama buku',
+      });
+      response.code(400);
+      return response;
+    }else{ 
+      const response = h.response({
+        status: 'fail',
+        message: 'Gagal memperbarui buku. Id tidak ditemukan',
+      });
+      response.code(404);
+      return response;
     }
    
-    const response = h.response({
-      status: 'fail',
-      message: 'Gagal memperbarui catatan. Id tidak ditemukan',
-    });
-    response.code(404);
-    return response;
+ 
     // console.log(response)
   };
    
-  // const deleteNoteByIdHandler = (request, h) => {
-  //   const { id } = request.params;
+  const deleteNoteByIdHandler = (request, h) => {
+    const { id } = request.params;
    
-  //   const index = notes.findIndex((note) => note.id === id);
+    const index = books.findIndex((note) => note.id === id);
    
-  //   if (index !== -1) {
-  //     notes.splice(index, 1);
-  //     const response = h.response({
-  //       status: 'success',
-  //       message: 'Catatan berhasil dihapus',
-  //     });
-  //     response.code(200);
-  //     return response;
-  //   }
+    if (index !== -1) {
+      books.splice(index, 1);
+      const response = h.response({
+        status: 'success',
+        message: 'Buku berhasil dihapus',
+      });
+      response.code(200);
+      return response;
+    }else { const response = h.response({
+      status: 'fail',
+      message: 'Buku gagal dihapus. Id tidak ditemukan',
+    });
+    response.code(404);
+    return response;
+    }
    
-  //  const response = h.response({
-  //     status: 'fail',
-  //     message: 'Catatan gagal dihapus. Id tidak ditemukan',
-  //   });
-  //   response.code(404);
-  //   return response;
-  // };
+  };
    
   module.exports = {
     addNoteHandler,
     getAllNotesHandler,
     getNoteByIdHandler,
     editNoteByIdHandler,
-    // deleteNoteByIdHandler,
+    deleteNoteByIdHandler,
   };

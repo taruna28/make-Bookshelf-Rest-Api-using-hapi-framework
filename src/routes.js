@@ -23,11 +23,11 @@ const routes = [
         path: '/books/{id}',
         handler: editNoteByIdHandler,
       },
-    //   {
-    //     method: 'DELETE',
-    //     path: '/notes/{id}',
-    //     handler: deleteNoteByIdHandler,
-    //  },
+      {
+        method: 'DELETE',
+        path: '/books/{id}',
+        handler: deleteNoteByIdHandler,
+     },
   ];
    
   module.exports = routes;
